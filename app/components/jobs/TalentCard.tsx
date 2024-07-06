@@ -13,7 +13,7 @@ const TalentCard = ({
   rating,
 }: TalentCardType) => {
   return (
-    <div className="border border-slate-300 p-6 shadow-card mb-3">
+    <div className="border border-slate-300 p-6 mb-3 duration-150 linear hover:shadow-card">
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="flex items-center space-x-2">
