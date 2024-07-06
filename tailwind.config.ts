@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,8 +12,36 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        background: '#fbf9f2'
+      },
+      container: {
+        center: true,
+      },
+      boxShadow: {
+        'card': 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;'
+      }
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        corporate: {
+          ...require("daisyui/src/theming/themes")["corporate"],
+          primary: "#ec7212",
+          secondary: "#433967",
+          accent: "#ec7212",
+          neutral: "#fbf9f2",
+          info: "#7783ff",
+          success: "#00b78a",
+          warning: "#ff9d42",
+          error: "#e74d5a",
+          "--rounded-btn": "0",
+          "--rounded-box": "0"
+        },
+      },
+    ],
+  },
 };
 export default config;
