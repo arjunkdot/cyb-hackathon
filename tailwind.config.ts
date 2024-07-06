@@ -19,7 +19,7 @@ const config: Config = {
         center: true,
       },
       boxShadow: {
-        'card': 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;'
+        'card': 'rgba(33, 35, 38, 0.1) 0px 10px 10px -10px'
       }
     },
   },
