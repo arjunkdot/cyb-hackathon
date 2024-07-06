@@ -30,7 +30,7 @@ const config: Config = {
         corporate: {
           ...require("daisyui/src/theming/themes")["corporate"],
           primary: "#ec7212",
-          secondary: "#433967",
+          secondary: "#5c5180",
           accent: "#ec7212",
           neutral: "#fbf9f2",
           info: "#7783ff",

@@ -45,7 +45,7 @@ const TalentCard = ({
           </a>
         </div>
       </div>
-      <p className="text-sm text-gray-700 leading-5 tracking-wide">
+      <p className="text-sm text-gray-700 leading-6 tracking-wide">
         {description}
       </p>
       <div className="flex gap-1 font-bold mt-5">
