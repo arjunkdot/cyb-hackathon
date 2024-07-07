@@ -5,6 +5,7 @@ import { MdOutlineNotifications } from "react-icons/md";
 import Notification from "../notification/Notification";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 function Header() {
   const router = useRouter();
   const [loggedInUser, setLoggedInUser] = useState<{} | null>(null);
@@ -36,13 +37,13 @@ function Header() {
           </Link>
         </div>
         <div className="flex gap-1">
-
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle">
+                className="btn btn-ghost btn-circle"
+              >
                 <div className="indicator">
                   <MdOutlineNotifications className="text-2xl" />
                   <span className="badge badge-sm indicator-item">2</span>
@@ -50,7 +51,8 @@ function Header() {
               </div>
               <div
                 tabIndex={0}
-                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
+                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow"
+              >
                 <Notification />
               </div>
             </div>
@@ -61,7 +63,8 @@ function Header() {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle avatar">
+                className="btn btn-ghost btn-circle avatar"
+              >
                 <div className="w-8 rounded-full">
                   <Image
                     alt="Tailwind CSS Navbar component"
@@ -70,32 +73,33 @@ function Header() {
                     height={36}
                   />
                 </div>
-
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
                 <li>
-                  <a className="justify-between">
+                  <Link href="/talent/user" className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link href="/dashboard/profile">Settings</Link>
                 </li>
                 <li>
                   <a onClick={(e) => handleLogout(e)}>Logout</a>
                 </li>
               </ul>
             </div>
-
           ) : (
-            <button className="btn btn-primary text-white font-bold py-1 px-8">
+            <Link
+              href="/login"
+              className="btn btn-primary text-white font-bold py-1 px-8"
+            >
               Login
-            </button>
+            </Link>
           )}
-
         </div>
       </div>
     </div>

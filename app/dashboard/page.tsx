@@ -50,7 +50,7 @@ export default function Dashboard() {
           <div className="breadcrumbs text-sm mb-0">
             <ul>
               <li>
-                <a>Dashboard</a>
+                <Link href="/dashboard">Dashboard</Link>
               </li>
               <li className="font-bold">
                 <a>Jobs</a>
