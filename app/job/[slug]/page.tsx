@@ -41,7 +41,6 @@ function TalentProfile({ jobId }) {
           if (error) {
             console.error("Error fetching job:", error);
           }
-          console.log("job", data.length);
 
           if (data && data.length > 0) {
             setJob({
@@ -121,7 +120,8 @@ function TalentProfile({ jobId }) {
           <div className="flex flex-wrap space-x-1">
             <button
               className="btn btn-primary text-white"
-              onClick={insertApplication}>
+              onClick={insertApplication}
+            >
               <MdOutlineArrowOutward className="text-lg" />
               Apply
             </button>

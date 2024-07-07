@@ -48,7 +48,8 @@ function Header() {
         <div className="flex items-center space-x-7">
           <Link
             href={`/`}
-            className="btn btn-ghost text-xl px-0 duration-150 transition-linear hover:bg-transparent hover:scale-105">
+            className="btn btn-ghost text-xl px-0 duration-150 transition-linear hover:bg-transparent hover:scale-105"
+          >
             <Image src="/logo.svg" alt="logo" width={36} height={36} />
           </Link>
           <ul className="flex items-center space-x-5">
@@ -67,7 +68,8 @@ function Header() {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle">
+                className="btn btn-ghost btn-circle"
+              >
                 <div className="indicator">
                   <MdOutlineNotifications className="text-xl" />
                   {notifcations && (
@@ -79,7 +81,8 @@ function Header() {
               </div>
               <div
                 tabIndex={0}
-                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
+                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow"
+              >
                 {notifcations && <Notification notifications={notifcations} />}
               </div>
             </div>
@@ -92,7 +95,8 @@ function Header() {
 
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
                 {/* <li>
                   <Link href="/talent/user" className="justify-between">
                     Profile
@@ -113,7 +117,8 @@ function Header() {
           ) : (
             <Link
               href="/login"
-              className="btn btn-primary btn-sm text-white font-bold py-2 px-8">
+              className="btn btn-primary btn-sm text-white font-bold py-2 px-8"
+            >
               Login
             </Link>
           )}

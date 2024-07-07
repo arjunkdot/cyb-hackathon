@@ -3,12 +3,15 @@ import { MdOutlineBookmarkBorder, MdOutlineStar } from "react-icons/md";
 import { BsDot } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { TalentCardType } from "@/types/types";
+import Link from "next/link";
 
 const TalentCard = ({
+  id,
   name,
   position,
   description,
   experience,
+  user_id,
   tags,
   rating,
 }: TalentCardType) => {
@@ -35,10 +38,13 @@ const TalentCard = ({
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <a href="#" className="btn btn-primary text-white">
+          <Link
+            href={`/talent/${user_id}`}
+            className="btn btn-primary text-white"
+          >
             <CgProfile className="text-lg" />
             View Profile
-          </a>
+          </Link>
           <a href="#" className="btn btn-light">
             <MdOutlineBookmarkBorder className="text-lg" />
             Bookmark

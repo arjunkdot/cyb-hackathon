@@ -11,7 +11,11 @@ import RatingBars from "@/app/components/general/RatingBars";
 import Comment from "@/app/components/general/Comment";
 import { supabase } from "@/lib/supabaseClient";
 import Loading from "@/app/components/general/Loading";
+import { useParams, useRouter } from "next/navigation";
 function TalentProfile() {
+  const router = useRouter();
+  const { slug } = useParams(); // Get the slug from the URL
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [userData, setUserData] = useState({
@@ -24,15 +28,16 @@ function TalentProfile() {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        setIsLoading(true);
-        const user = supabase.auth.getUser();
-        if (user) {
+    if (slug) {
+      const fetchUserData = async () => {
+        try {
+          setIsLoading(true);
+          console.log(`Fetching job with slug: ${slug}`);
+
           const { data, error } = await supabase
             .from("talents")
             .select("*")
-            .eq("user_id", (await user).data.user?.id)
+            .eq("user_id", slug)
             .limit(1); // Use limit(1) instead of single()
 
           if (error) {
@@ -41,8 +46,8 @@ function TalentProfile() {
 
           if (data && data.length > 0) {
             setUserData({
-              name: data[0].name || "",
-              email: (await supabase.auth.getUser()).data.user?.email || "",
+              name: data[0].name,
+              email: data[0].email || "",
               experience: data[0].experience || 0,
               payRange: data[0].pay || 0,
               hours: data[0].hours_per_week || 0,
@@ -51,17 +56,17 @@ function TalentProfile() {
           } else {
             setUserData([]);
           }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      };
 
-    fetchUserData();
-  }, []);
-
+      fetchUserData();
+    }
+  }, [slug]);
+  console.log(slug, "njf");
   if (isLoading) {
     return <Loading />;
   }
@@ -91,7 +96,8 @@ function TalentProfile() {
             <a
               href={`https://paypal.me/${userData.paypal}`}
               target="_blank"
-              className="btn btn-secondary text-white">
+              className="btn btn-secondary text-white"
+            >
               <BiDollarCircle className="text-lg" />
               Donate
             </a>
@@ -180,7 +186,8 @@ function TalentProfile() {
                   <Rating />
                   <textarea
                     className="textarea textarea-bordered w-full mt-3"
-                    placeholder="Write a review"></textarea>
+                    placeholder="Write a review"
+                  ></textarea>
                   <button className="btn btn-primary text-white w-full mt-3">
                     Add Review
                   </button>
