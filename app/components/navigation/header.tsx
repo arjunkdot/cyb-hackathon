@@ -103,6 +103,9 @@ function Header() {
                   <Link href="/dashboard/profile">Settings</Link>
                 </li> */}
                 <li>
+                  <Link href="/dashboard">Dashboard</Link>
+                </li>
+                <li>
                   <a onClick={(e) => handleLogout(e)}>Logout</a>
                 </li>
               </ul>

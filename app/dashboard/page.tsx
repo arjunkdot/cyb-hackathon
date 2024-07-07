@@ -1,6 +1,5 @@
 "use client";
 import { supabase } from "@/lib/supabaseClient";
-import { useRouter } from "next/navigation";
 import Forbidden from "../components/general/Forbidden";
 import { useCheckProfileExists } from "../hooks/useCheckProfileExists";
 import React, { useEffect, useState } from "react";
@@ -9,11 +8,9 @@ import {
   MdArrowDropDown,
   MdOutlineSearch,
 } from "react-icons/md";
-import { Database } from "@/types/supabase";
+import Loading from "../components/general/Loading";
 
 export default function Dashboard() {
-  const router = useRouter();
-
   const [jobApplications, setJobApplications] = useState<any[]>([]);
 
   const { userData } = useCheckProfileExists("/dashboard/onboarding");
@@ -59,9 +56,8 @@ export default function Dashboard() {
     fetchJobApplications();
   }, []);
 
-  console.log(jobApplications, ";;;");
   if (!userData) {
-    return <Forbidden />;
+    return <Loading />;
   }
 
   return (
@@ -118,9 +114,9 @@ export default function Dashboard() {
               {jobApplications.length > 0 ? (
                 jobApplications.map((application) => (
                   <tr key={application.id}>
-                    <td>{application.addjob.title}</td>{" "}
-                    <td>{application.addjob.company}</td>{" "}
-                    <td>{application.addjob.posted_by}</td>{" "}
+                    <td>{application.addjob.title}</td>
+                    <td>{application.addjob.company}</td>
+                    <td>{application.addjob.posted_by}</td>
                     <td>
                       {new Date(
                         application.application_date
@@ -152,9 +148,11 @@ export default function Dashboard() {
                   </tr>
                 ))
               ) : (
-                <td className="text-gray-500 text-center" colSpan={6}>
-                  Nothing to show here.
-                </td>
+                <tr>
+                  <td className="text-gray-500 text-center" colSpan={6}>
+                    Nothing to show here.
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
