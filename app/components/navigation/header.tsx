@@ -110,7 +110,7 @@ function Header() {
           ) : (
             <Link
               href="/login"
-              className="btn btn-primary text-white font-bold py-1 px-8">
+              className="btn btn-primary btn-sm text-white font-bold py-2 px-8">
               Login
             </Link>
           )}

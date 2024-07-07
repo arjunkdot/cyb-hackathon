@@ -10,7 +10,7 @@ import Rating from "@/app/components/general/Rating";
 import RatingBars from "@/app/components/general/RatingBars";
 import Comment from "@/app/components/general/Comment";
 import { supabase } from "@/lib/supabaseClient";
-
+import Loading from "@/app/components/general/Loading";
 function TalentProfile() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -20,6 +20,7 @@ function TalentProfile() {
     experience: "",
     payRange: "",
     hours: "",
+    paypal: "",
   });
 
   useEffect(() => {
@@ -37,7 +38,6 @@ function TalentProfile() {
           if (error) {
             throw error;
           }
-          console.log(data);
 
           if (data && data.length > 0) {
             setUserData({
@@ -46,10 +46,10 @@ function TalentProfile() {
               experience: data[0].experience || 0,
               payRange: data[0].pay || 0,
               hours: data[0].hours_per_week || 0,
+              paypal: data[0].paypal || "",
             });
           } else {
             setUserData([]);
-            console.log();
           }
         }
       } catch (error) {
@@ -63,7 +63,7 @@ function TalentProfile() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <div className="min-h-[calc(100vh-72px)] bg-gray-100 py-10">
@@ -88,7 +88,10 @@ function TalentProfile() {
               <MdOutlineHandshake className="text-lg" />
               Hire Talent
             </a>
-            <a href="#" className="btn btn-secondary text-white">
+            <a
+              href={`https://paypal.me/${userData.paypal}`}
+              target="_blank"
+              className="btn btn-secondary text-white">
               <BiDollarCircle className="text-lg" />
               Donate
             </a>
@@ -177,8 +180,7 @@ function TalentProfile() {
                   <Rating />
                   <textarea
                     className="textarea textarea-bordered w-full mt-3"
-                    placeholder="Write a review"
-                  ></textarea>
+                    placeholder="Write a review"></textarea>
                   <button className="btn btn-primary text-white w-full mt-3">
                     Add Review
                   </button>

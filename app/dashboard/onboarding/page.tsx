@@ -12,6 +12,7 @@ const formSchema = z.object({
   pay: z.number().min(1, "Pay must be a positive number"),
   hours_per_week: z.number().min(1, "Hours per week must be a positive number"),
   bio: z.string().min(1, "Description is required"),
+  paypal: z.string().min(1).optional(),
 });
 type FormData = z.infer<typeof formSchema>;
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -24,6 +25,7 @@ function Onboarding() {
     pay: 0,
     hours_per_week: 0,
     bio: "",
+    paypal: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +46,7 @@ function Onboarding() {
       pay: Number(formData.pay),
       hours_per_week: Number(formData.hours_per_week),
       bio: formData.bio,
+      paypal: formData.paypal,
     });
 
     if (!parsedData.success) {
@@ -72,6 +75,7 @@ function Onboarding() {
           pay: 0,
           hours_per_week: 0,
           bio: "",
+          paypal: "",
         });
 
         router.push("/dashboard/");
@@ -191,6 +195,27 @@ function Onboarding() {
               {errors.hours_per_week && (
                 <p className="text-red-500 text-xs font-semibold">
                   {errors.hours_per_week}
+                </p>
+              )}
+            </label>
+            <label className="form-control w-full max-w-xs mt-3">
+              <div className="label">
+                <span className="label-text text-sm font-semibold">
+                  Your PayPal.me username?
+                </span>
+              </div>
+              <input
+                type="number"
+                name="paypal"
+                value={formData.paypal}
+                onChange={handleChange}
+                placeholder="e.g.johndoe"
+                min={0}
+                className="input input-sm input-bordered w-full max-w-xs"
+              />
+              {errors.paypal && (
+                <p className="text-red-500 text-xs font-semibold">
+                  {errors.paypal}
                 </p>
               )}
             </label>

@@ -16,7 +16,7 @@ export default function Home() {
             </h1>
             <p className="w-[85%]">
               PixaJobs helps you find your next freelance job faster. Because,
-              life is too short waste working on things you don&apos;t care
+              life is too short to waste working on things you don&apos;t care
               about. Join today and start hunting for your next thing.
             </p>
             <Link
