@@ -4,20 +4,29 @@ import Image from "next/image";
 import { MdOutlineNotifications } from "react-icons/md";
 import Notification from "../notification/Notification";
 import { supabase } from "@/lib/supabaseClient";
+import useNotifactions from "./../../hooks/useNotifications";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 function Header() {
   const router = useRouter();
   const [loggedInUser, setLoggedInUser] = useState<{} | null>(null);
+  const [notifcationCount, setNotificationCount] = useState<number>(0);
+  const { getAllNotifications } = useNotifactions();
+
   useEffect(() => {
     async function checkIfLoggedIn() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       setLoggedInUser(user);
+
+      if (user) {
+        const data = await getAllNotifications(user.id);
+        if (data) setNotificationCount(data.length);
+      }
     }
     checkIfLoggedIn();
-  }, [loggedInUser]);
+  }, []);
 
   const handleLogout = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -45,7 +54,11 @@ function Header() {
                 className="btn btn-ghost btn-circle">
                 <div className="indicator">
                   <MdOutlineNotifications className="text-2xl" />
-                  <span className="badge badge-sm indicator-item">2</span>
+                  {notifcationCount && (
+                    <span className="badge badge-sm indicator-item">
+                      {notifcationCount}
+                    </span>
+                  )}
                 </div>
               </div>
               <div

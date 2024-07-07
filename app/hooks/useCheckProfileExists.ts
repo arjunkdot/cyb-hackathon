@@ -34,7 +34,6 @@ export function useCheckProfileExists(to: string = '/', redirectIfFound = false)
                     .select("*")
                     .eq("user_id", userData?.id)
                     .maybeSingle();
-                console.log('Data', profile)
                 if (error) {
                     throw error;
                 } else {
@@ -50,7 +49,7 @@ export function useCheckProfileExists(to: string = '/', redirectIfFound = false)
         };
         checkSession();
         checkIfProfileExists();
-    }, [router, userData?.id, to]);
+    }, [router, userData?.id, to, redirectIfFound]);
 
     return {
         userData
