@@ -10,6 +10,7 @@ import {
   MdOutlineSearch,
 } from "react-icons/md";
 import { Database } from "@/types/supabase";
+import Link from "next/link";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -96,10 +97,13 @@ export default function Dashboard() {
                 placeholder="Search"
               />
             </label>
-            <button className="btn btn-primary text-white">
+            <Link
+              href="/dashboard/add-job"
+              className="btn btn-primary text-white"
+            >
               <MdAddCircleOutline className="text-lg" />
               Add Jobs
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -131,7 +135,8 @@ export default function Dashboard() {
                     <div
                       className={`badge badge-${getStatusBadgeColor(
                         application.status
-                      )} text-xs font-bold text-black`}>
+                      )} text-xs font-bold text-black`}
+                    >
                       {application.status}
                     </div>
                   </td>

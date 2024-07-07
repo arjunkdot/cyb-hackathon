@@ -1,15 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
-
 import { supabase } from "@/lib/supabaseClient";
 import Banner from "../components/general/banner";
 import JobCard from "../components/jobs/jobCard";
 import TalentFilter from "../components/jobs/TalentFilter";
 
+const parseExperienceRange = (experience) => {
+  const [min, max] = experience.split("-").map(Number);
+  return { min, max: max || Infinity };
+};
+
+const jobMatchesExperienceFilter = (job, selectedFilters) => {
+  if (selectedFilters.length === 0) return true;
+
+  const experienceRequired = job.experience_required;
+  return selectedFilters.some((filter) => {
+    const { min, max } = parseExperienceRange(filter);
+    return experienceRequired >= min && experienceRequired <= max;
+  });
+};
+
 function JobPage() {
   const [jobs, setJobs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -24,32 +39,35 @@ function JobPage() {
     fetchJobs();
   }, []);
 
-  const handleSearchChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const filteredJobs = jobs.filter((job) => {
-    return (
+    const matchesSearchQuery =
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.required_skills.toLowerCase().includes(searchQuery.toLowerCase())
+      job.required_skills.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Add additional fields you want to search by
-    );
+    const matchesExperience = jobMatchesExperienceFilter(job, selectedFilters);
+
+    return matchesSearchQuery && matchesExperience;
   });
+
   return (
     <div>
       <Banner
         title="Explore jobs"
-        subtitle="Find top rated talents for your next bit thing."
+        subtitle="Find top rated talents for your next big thing."
       />
       <div className="container my-8">
         <div className="grid grid-cols-[350px_1fr] gap-4">
           <div>
-            <TalentFilter />
+            <TalentFilter
+              selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
+            />
           </div>
           <div>
             <div className="mb-4">

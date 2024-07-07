@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { MdCheck } from "react-icons/md";
 import { supabase } from "@/lib/supabaseClient";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { redirect } from "next/navigation";
+import router from "next/navigation";
 function Dashboard() {
   const [jobData, setJobData] = useState({
     title: "",
@@ -46,16 +49,21 @@ function Dashboard() {
           throw error;
         }
 
-        console.log("Job opening created/updated successfully! ");
+        toast.success("Job opening created/updated successfully! ");
+        setTimeout(() => {
+          router.push("/dashboard"); // Replace with your dashboard route
+        }, 2000);
         // Optionally, add a success message or redirect after creating/updating
       }
     } catch (error) {
       console.error("Error creating/updating job opening:", error);
+      toast.error("Failed to create/update job opening.");
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <div className="bg-background py-2">
         <div className="container">
           <div className="breadcrumbs text-sm mb-0">
@@ -80,7 +88,7 @@ function Dashboard() {
               onClick={handleSaveChanges}
             >
               <MdCheck className="text-lg" />
-              add job{" "}
+              add job
             </button>
           </div>
         </div>

@@ -4,7 +4,8 @@ import { supabase } from "@/lib/supabaseClient";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdOutlineBookmarkBorder, MdOutlineArrowOutward } from "react-icons/md";
-import { applyForJob } from "@/lib/jobApplicationService"; // Example service function to handle application submission
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TalentProfile({ jobId }) {
   const router = useRouter();
@@ -81,7 +82,6 @@ function TalentProfile({ jobId }) {
           job_id: slug,
           user_id: (await supabase.auth.getUser()).data.user?.id,
           name: (await supabase.auth.getUser()).data.user?.user_metadata.name,
-
           email: (await supabase.auth.getUser()).data.user?.email,
           status: "Pending", // Default status
         },
@@ -90,10 +90,12 @@ function TalentProfile({ jobId }) {
       if (error) {
         throw error;
       }
-
       console.log("Application submitted successfully!");
+      toast.success("Application submitted successfully!"); // Show success toast
     } catch (error) {
-      console.error("Error submitting application:", error.message);
+      console.error("Error submitting application:", error);
+      toast.error("Failed to submit application. Please try again later."); // Show error toast
+
       alert("Failed to submit application. Please try again later.");
     }
   };
@@ -103,6 +105,7 @@ function TalentProfile({ jobId }) {
 
   return (
     <div className="min-h-[calc(100vh-72px)] bg-gray-100 py-10">
+      <ToastContainer />
       <div className="container bg-white border border-gray-300">
         <div className="border-b border-gray-300 p-8 flex items-start justify-between">
           <div>
