@@ -7,7 +7,7 @@ function Dashboard() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
-    description: "",
+    bio: "",
     experience: 0,
     payRange: 0,
     hours: 0,
@@ -22,7 +22,7 @@ function Dashboard() {
           const { data, error } = await supabase
             .from("talents")
             .select("*")
-            .eq("user_id", (await user).data.user?.id)
+            .eq("user_id", (await user).data.user?.id!)
             .single();
 
           if (error) {
@@ -33,7 +33,7 @@ function Dashboard() {
             setUserData({
               name: data.name || "",
               email: (await supabase.auth.getUser()).data.user?.email || "",
-              description: data.description || "",
+              bio: data.bio || "",
               experience: data.experience || 0,
               payRange: data.pay || 0,
               hours: data.hours_per_week || 0,
@@ -70,7 +70,7 @@ function Dashboard() {
             pay: userData.payRange,
             hours_per_week: userData.hours,
           })
-          .eq("user_id", (await user).data.user?.id);
+          .eq("user_id", (await user).data.user?.id!);
 
         if (error) {
           throw error;
@@ -189,7 +189,7 @@ function Dashboard() {
               className="textarea textarea-bordered h-24"
               placeholder="Type here"
               name="descrpiton"
-              value={userData.description}
+              defaultValue={userData.bio}
               onChange={handleInputChange}
             />
           </label>
