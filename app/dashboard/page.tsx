@@ -8,6 +8,7 @@ import {
   MdArrowDropDown,
   MdOutlineSearch,
 } from "react-icons/md";
+
 import Loading from "../components/general/Loading";
 
 export default function Dashboard() {
@@ -90,10 +91,13 @@ export default function Dashboard() {
                 placeholder="Search"
               />
             </label>
-            <button className="btn btn-primary text-white">
+            <Link
+              href="/dashboard/add-job"
+              className="btn btn-primary text-white"
+            >
               <MdAddCircleOutline className="text-lg" />
               Add Jobs
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -111,6 +115,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
+
               {jobApplications.length > 0 ? (
                 jobApplications.map((application) => (
                   <tr key={application.id}>

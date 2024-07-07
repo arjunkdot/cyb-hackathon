@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MdCheck } from "react-icons/md";
 import { supabase } from "@/lib/supabaseClient";
+import { toast, ToastContainer } from "react-toastify";
 
 function Dashboard() {
   const [userData, setUserData] = useState({
@@ -76,16 +77,18 @@ function Dashboard() {
           throw error;
         }
 
-        console.log("Profile updated successfully! ");
+        toast.success("profile updated successfully! ");
         // Optionally, add a success message or redirect after updating
       }
     } catch (error) {
       console.error("Error updating profile:", error);
+      toast.error("Failed to updating profile.");
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <title>Profile - PixaJobs</title>
       <div className="bg-background py-2">
         <div className="container">
@@ -108,7 +111,8 @@ function Dashboard() {
           <div className="flex items-center gap-2">
             <button
               className="btn btn-primary text-white"
-              onClick={handleSaveChanges}>
+              onClick={handleSaveChanges}
+            >
               <MdCheck className="text-lg" />
               Save Changes
             </button>
