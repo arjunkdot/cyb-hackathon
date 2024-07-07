@@ -11,6 +11,7 @@ export type TalentCardType = {
     description: string;
     rating?: number;
     tags?: string[];
+    paypal?: string;
 }
 
 export type NotificatonType = {

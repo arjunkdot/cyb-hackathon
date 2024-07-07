@@ -4,8 +4,12 @@ import { supabase } from "@/lib/supabaseClient";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdOutlineBookmarkBorder, MdOutlineArrowOutward } from "react-icons/md";
+
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { applyForJob } from "@/lib/jobApplicationService"; // Example service function to handle application submission
+import Loading from "@/app/components/general/Loading";
 
 function TalentProfile({ jobId }) {
   const router = useRouter();
@@ -100,7 +104,7 @@ function TalentProfile({ jobId }) {
     }
   };
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -117,8 +121,7 @@ function TalentProfile({ jobId }) {
           <div className="flex flex-wrap space-x-1">
             <button
               className="btn btn-primary text-white"
-              onClick={insertApplication}
-            >
+              onClick={insertApplication}>
               <MdOutlineArrowOutward className="text-lg" />
               Apply
             </button>

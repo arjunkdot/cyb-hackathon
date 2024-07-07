@@ -30,7 +30,7 @@ function Header() {
       }
     }
     checkIfLoggedIn();
-  }, [getAllNotifications]);
+  }, []);
 
   const handleLogout = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -44,24 +44,30 @@ function Header() {
   };
   return (
     <div className="navbar bg-base-100 p-0 border border-b border-slate-200">
-      <div className="container">
-        <div className="flex-1">
+      <div className="container flex items-center justify-between">
+        <div className="flex items-center space-x-7">
           <Link
             href={`/`}
             className="btn btn-ghost text-xl px-0 duration-150 transition-linear hover:bg-transparent hover:scale-105">
             <Image src="/logo.svg" alt="logo" width={36} height={36} />
           </Link>
+          <ul className="flex items-center space-x-5">
+            <li className="text-sm font-semibold duration-150 linear hover:text-gray-600">
+              <Link href="/jobs">Jobs</Link>
+            </li>
+            <li className="text-sm font-semibold duration-150 linear hover:text-gray-600">
+              <Link href="/talents">Talents</Link>
+            </li>
+          </ul>
         </div>
 
-        <div className="flex  items-center gap-1">
-
+        <div className="flex items-center gap-1">
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle"
-              >
+                className="btn btn-ghost btn-circle">
                 <div className="indicator">
                   <MdOutlineNotifications className="text-xl" />
                   {notifcations && (
@@ -73,25 +79,21 @@ function Header() {
               </div>
               <div
                 tabIndex={0}
-
                 className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
                 {notifcations && <Notification notifications={notifcations} />}
-
               </div>
             </div>
           ) : null}
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
-
               <button className="btn btn-sm btn-ghost text-xs font-semibold">
                 {loggedInUser.email}
               </button>
 
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li>
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                {/* <li>
                   <Link href="/talent/user" className="justify-between">
                     Profile
                     <span className="badge">New</span>
@@ -99,6 +101,9 @@ function Header() {
                 </li>
                 <li>
                   <Link href="/dashboard/profile">Settings</Link>
+                </li> */}
+                <li>
+                  <Link href="/dashboard">Dashboard</Link>
                 </li>
                 <li>
                   <a onClick={(e) => handleLogout(e)}>Logout</a>
@@ -108,9 +113,7 @@ function Header() {
           ) : (
             <Link
               href="/login"
-
-              className="btn btn-primary text-white font-bold py-1 px-8">
-
+              className="btn btn-primary btn-sm text-white font-bold py-2 px-8">
               Login
             </Link>
           )}
