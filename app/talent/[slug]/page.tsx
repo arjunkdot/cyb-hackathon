@@ -21,6 +21,7 @@ function TalentProfile() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
+    description: "",
     experience: "",
     payRange: "",
     hours: "",
@@ -48,6 +49,7 @@ function TalentProfile() {
             setUserData({
               name: data[0].name,
               email: data[0].email || "",
+              description: data[0].description || "",
               experience: data[0].experience || 0,
               payRange: data[0].pay || 0,
               hours: data[0].hours_per_week || 0,
@@ -154,13 +156,7 @@ function TalentProfile() {
           <div>
             <div className="border-b border-gray-300 p-8">
               <h2 className="font-bold text-xl mb-4">Profile</h2>
-              <p>
-                Hi, I&apos;m Sean Daley. I&apos;m a visual artist with over 15+
-                years of experience. I have experience working small and large
-                organization alike. I have a passion for creating beautiful
-                visuals. I am currently working on my portfolio and hope to
-                create some awesome visual work.
-              </p>
+              <p>{userData.description}</p>
             </div>
             {/* Work History */}
             <div className="p-8">
