@@ -11,18 +11,6 @@ function TalentProfile({ jobId }) {
   const { slug } = useParams(); // Get the slug from the URL
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [resumeFile, setResumeFile] = useState(null); // State to hold the file
-  const [resumeUrl, setResumeUrl] = useState(""); // State to hold the file URL (optional for display)
-
-  // Function to toggle modal state
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
   const [job, setJob] = useState({
     title: "",
     description: "",
@@ -85,25 +73,30 @@ function TalentProfile({ jobId }) {
     }
   }, [slug]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const insertApplication = async () => {
     try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
+      // Insert data into job_applications table
+      const { data, error } = await supabase.from("job_applications").insert([
+        {
+          job_id: slug,
+          user_id: (await supabase.auth.getUser()).data.user?.id,
+          name: (await supabase.auth.getUser()).data.user?.user_metadata.name,
 
-      await applyForJob(jobId, formData);
-      alert("Application submitted successfully!");
-      // Optionally reset form fields after successful submission
-      setName("");
-      setEmail("");
+          email: (await supabase.auth.getUser()).data.user?.email,
+          status: "Pending", // Default status
+        },
+      ]);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("Application submitted successfully!");
     } catch (error) {
-      console.error("Failed to submit application:", error);
+      console.error("Error submitting application:", error.message);
       alert("Failed to submit application. Please try again later.");
     }
   };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -119,7 +112,10 @@ function TalentProfile({ jobId }) {
             <p className="text-gray-500">{job.company}</p>
           </div>
           <div className="flex flex-wrap space-x-1">
-            <button className="btn btn-primary text-white">
+            <button
+              className="btn btn-primary text-white"
+              onClick={insertApplication}
+            >
               <MdOutlineArrowOutward className="text-lg" />
               Apply
             </button>
