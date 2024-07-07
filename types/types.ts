@@ -4,11 +4,19 @@ export type BannerType = {
 }
 
 export type TalentCardType = {
-    id: string,
+    id: string;
     name: string;
     position: string;
     exp: number;
     description: string;
     rating?: number;
     tags?: string[];
+}
+
+export type NotificatonType = {
+    id: string;
+    content: string;
+    created_at: string;
+    user_id: string;
+    read: boolean;
 }

@@ -1,8 +1,8 @@
 "use client";
 import { supabase } from "@/lib/supabaseClient";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Forbidden from "../components/general/Forbidden";
+import { useCheckProfileExists } from "../hooks/useCheckProfileExists";
 import React, { useEffect, useState } from "react";
 import {
   MdAddCircleOutline,
@@ -12,33 +12,11 @@ import {
 
 export default function Dashboard() {
   const router = useRouter();
-  const [userData, setUserData] = useState<any>(null); // Initialize user state as null
+
   const [jobApplications, setJobApplications] = useState([]);
 
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const { data: session, error } = await supabase.auth.getSession();
 
-        if (error) {
-          console.error("Error fetching session:", error);
-          throw error;
-        }
-
-        if (!session) {
-          console.log("No session found, redirecting to login...");
-          router.push("/login");
-        } else {
-          setUserData(session.session?.user); // Set userData to session.user
-        }
-      } catch (error) {
-        console.error("Error checking session:", error);
-        router.push("/login");
-      }
-    };
-
-    checkSession();
-  }, [router]);
+  const { userData } = useCheckProfileExists("/dashboard/onboarding");
 
   useEffect(() => {
     const fetchJobApplications = async () => {
@@ -87,23 +65,25 @@ export default function Dashboard() {
   }
 
   return (
-    <>
-      <div>
-        <div className="bg-background py-2">
-          <div className="container">
-            <div className="breadcrumbs text-sm mb-0">
-              <ul>
-                <li>
-                  <Link href="/dashboard">Dashboard</Link>
-                </li>
-                <li className="font-bold">
-                  <a>Jobs</a>
-                </li>
-              </ul>
-            </div>
+
+    <div>
+      <title>Dashboard - PixaJobs</title>
+
+      <div className="bg-background py-2">
+        <div className="container">
+          <div className="breadcrumbs text-sm mb-0">
+            <ul>
+              <li>
+                <a>Dashboard</a>
+              </li>
+              <li className="font-bold">
+                <a>Jobs</a>
+              </li>
+            </ul>
           </div>
         </div>
-        <h1>Welcome, {userData.email}</h1>
+      </div>
+
 
         <div className="container mt-8">
           <div className="flex items-center justify-between">

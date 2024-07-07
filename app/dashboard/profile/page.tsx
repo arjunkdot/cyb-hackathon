@@ -7,6 +7,7 @@ function Dashboard() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
+    description: "",
     experience: 0,
     payRange: 0,
     hours: 0,
@@ -32,6 +33,7 @@ function Dashboard() {
             setUserData({
               name: data.name || "",
               email: (await supabase.auth.getUser()).data.user?.email || "",
+              description: data.description || "",
               experience: data.experience || 0,
               payRange: data.pay || 0,
               hours: data.hours_per_week || 0,
@@ -84,6 +86,7 @@ function Dashboard() {
 
   return (
     <div>
+      <title>Profile - PixaJobs</title>
       <div className="bg-background py-2">
         <div className="container">
           <div className="breadcrumbs text-sm mb-0">
@@ -105,8 +108,7 @@ function Dashboard() {
           <div className="flex items-center gap-2">
             <button
               className="btn btn-primary text-white"
-              onClick={handleSaveChanges}
-            >
+              onClick={handleSaveChanges}>
               <MdCheck className="text-lg" />
               Save Changes
             </button>
@@ -176,6 +178,18 @@ function Dashboard() {
               className="input input-bordered w-full max-w-xs"
               name="hours"
               value={userData.hours}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Description</span>
+            </div>
+            <textarea
+              className="textarea textarea-bordered h-24"
+              placeholder="Type here"
+              name="descrpiton"
+              value={userData.description}
               onChange={handleInputChange}
             />
           </label>
