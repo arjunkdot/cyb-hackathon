@@ -1,8 +1,8 @@
 "use client";
 import { supabase } from "@/lib/supabaseClient";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Forbidden from "../components/general/Forbidden";
+import { useCheckProfileExists } from "../hooks/useCheckProfileExists";
 import React, { useEffect, useState } from "react";
 import {
   MdAddCircleOutline,
@@ -12,32 +12,8 @@ import {
 
 export default function Dashboard() {
   const router = useRouter();
-  const [userData, setUserData] = useState<any>(null); // Initialize user state as null
 
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const { data: session, error } = await supabase.auth.getSession();
-
-        if (error) {
-          console.error("Error fetching session:", error);
-          throw error;
-        }
-
-        if (!session) {
-          console.log("No session found, redirecting to login...");
-          router.push("/login");
-        } else {
-          setUserData(session.session?.user); // Set userData to session.user
-        }
-      } catch (error) {
-        console.error("Error checking session:", error);
-        router.push("/login");
-      }
-    };
-
-    checkSession();
-  }, [router]);
+  const { userData } = useCheckProfileExists("/dashboard/onboarding");
 
   if (!userData) {
     return <Forbidden />;

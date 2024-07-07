@@ -4,6 +4,7 @@ import Image from "next/image";
 import { MdOutlineNotifications } from "react-icons/md";
 import Notification from "../notification/Notification";
 import { supabase } from "@/lib/supabaseClient";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 function Header() {
   const router = useRouter();
@@ -36,7 +37,6 @@ function Header() {
           </Link>
         </div>
         <div className="flex gap-1">
-
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <div
@@ -70,7 +70,6 @@ function Header() {
                     height={36}
                   />
                 </div>
-
               </div>
               <ul
                 tabIndex={0}
@@ -89,13 +88,11 @@ function Header() {
                 </li>
               </ul>
             </div>
-
           ) : (
             <button className="btn btn-primary text-white font-bold py-1 px-8">
               Login
             </button>
           )}
-
         </div>
       </div>
     </div>
