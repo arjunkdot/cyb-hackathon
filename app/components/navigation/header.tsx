@@ -31,11 +31,12 @@ function Header() {
     <div className="navbar bg-base-100 p-0 border border-b border-slate-200">
       <div className="container">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl px-0">
+          <Link href={`/`} className="btn btn-ghost text-xl px-0">
             <Image src="/logo.svg" alt="logo" width={36} height={36} />
-          </a>
+          </Link>
         </div>
         <div className="flex gap-1">
+
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <div
@@ -69,6 +70,7 @@ function Header() {
                     height={36}
                   />
                 </div>
+
               </div>
               <ul
                 tabIndex={0}
@@ -87,11 +89,13 @@ function Header() {
                 </li>
               </ul>
             </div>
+
           ) : (
             <button className="btn btn-primary text-white font-bold py-1 px-8">
               Login
             </button>
           )}
+
         </div>
       </div>
     </div>
