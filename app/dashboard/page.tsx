@@ -35,7 +35,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <h1>Welcome, {userData.email}</h1>
 
       <div className="container mt-8">
         <div className="flex items-center justify-between">

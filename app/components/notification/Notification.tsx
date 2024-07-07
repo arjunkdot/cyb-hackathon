@@ -3,28 +3,16 @@ import useNotificatons from "../../hooks/useNotifications";
 import { NotificatonType } from "@/types/types";
 import { formatRelative } from "date-fns";
 import useCurrentUser from "./../../hooks/useUserInfo";
-function Notification() {
-  const { user } = useCurrentUser();
-  const [notifications, setNotifications] = useState<NotificatonType[]>([]);
-  const { getAllNotifications } = useNotificatons();
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      if (user) {
-        const data = await getAllNotifications(user.id);
-        if (data) setNotifications(data);
-      }
-    };
-
-    fetchNotifications();
-  }, [user]);
-
+function Notification({ notifications }: { notifications: NotificatonType[] }) {
   return (
     <div className="min-w-[350px]">
       <div className="card-header flex items-center justify-between p-4 pb-0">
-        <span className="text-sm font-bold">Notifications</span>
-        <button className="btn btn-ghost btn-sm text-xs text-primary">
+        <span className="text-sm font-bold pb-3 border-b border-gray-300 block w-full">
+          Notifications{" "}
+        </span>
+        {/* <button className="btn btn-ghost btn-sm text-xs text-primary">
           Clear all
-        </button>
+        </button> */}
       </div>
       <div className="card-body p-3">
         <ul>

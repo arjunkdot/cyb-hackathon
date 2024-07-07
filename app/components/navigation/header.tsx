@@ -7,10 +7,11 @@ import { supabase } from "@/lib/supabaseClient";
 import useNotifactions from "./../../hooks/useNotifications";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { NotificatonType } from "@/types/types";
 function Header() {
   const router = useRouter();
   const [loggedInUser, setLoggedInUser] = useState<{} | null>(null);
-  const [notifcationCount, setNotificationCount] = useState<number>(0);
+  const [notifcations, setNotifications] = useState<NotificatonType[]>([]);
   const { getAllNotifications } = useNotifactions();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function Header() {
 
       if (user) {
         const data = await getAllNotifications(user.id);
-        if (data) setNotificationCount(data.length);
+        if (data) setNotifications(data);
       }
     }
     checkIfLoggedIn();
@@ -54,9 +55,9 @@ function Header() {
                 className="btn btn-ghost btn-circle">
                 <div className="indicator">
                   <MdOutlineNotifications className="text-2xl" />
-                  {notifcationCount && (
+                  {notifcations && (
                     <span className="badge badge-sm indicator-item">
-                      {notifcationCount}
+                      {notifcations.length}
                     </span>
                   )}
                 </div>
@@ -64,7 +65,7 @@ function Header() {
               <div
                 tabIndex={0}
                 className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
-                <Notification />
+                {notifcations && <Notification notifications={notifcations} />}
               </div>
             </div>
           ) : null}
