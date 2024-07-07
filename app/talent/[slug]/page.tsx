@@ -17,9 +17,9 @@ function TalentProfile() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
-    experience: 0,
-    payRange: 0,
-    hours: 0,
+    experience: "",
+    payRange: "",
+    hours: "",
   });
 
   useEffect(() => {
@@ -28,25 +28,28 @@ function TalentProfile() {
         setIsLoading(true);
         const user = supabase.auth.getUser();
         if (user) {
-          // Fetch user profile data from Supabase
           const { data, error } = await supabase
             .from("talents")
             .select("*")
             .eq("user_id", (await user).data.user?.id)
-            .single();
+            .limit(1); // Use limit(1) instead of single()
 
           if (error) {
             throw error;
           }
+          console.log(data);
 
-          if (data) {
+          if (data && data.length > 0) {
             setUserData({
-              name: data.name || "",
+              name: data[0].name || "",
               email: (await supabase.auth.getUser()).data.user?.email || "",
-              experience: data.experience || 0,
-              payRange: data.pay || 0,
-              hours: data.hours_per_week || 0,
+              experience: data[0].experience || 0,
+              payRange: data[0].pay || 0,
+              hours: data[0].hours_per_week || 0,
             });
+          } else {
+            setUserData([]);
+            console.log();
           }
         }
       } catch (error) {
