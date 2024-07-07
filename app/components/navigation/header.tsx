@@ -8,9 +8,10 @@ import useNotifactions from "./../../hooks/useNotifications";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NotificatonType } from "@/types/types";
+import { User } from "@supabase/supabase-js";
 function Header() {
   const router = useRouter();
-  const [loggedInUser, setLoggedInUser] = useState<{} | null>(null);
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
   const [notifcations, setNotifications] = useState<NotificatonType[]>([]);
   const { getAllNotifications } = useNotifactions();
 
@@ -27,7 +28,7 @@ function Header() {
       }
     }
     checkIfLoggedIn();
-  }, []);
+  }, [getAllNotifications]);
 
   const handleLogout = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -36,17 +37,20 @@ function Header() {
     const { error } = await supabase.auth.signOut();
     if (!error) {
       router.push("/");
+      setLoggedInUser(null);
     }
   };
   return (
     <div className="navbar bg-base-100 p-0 border border-b border-slate-200">
       <div className="container">
         <div className="flex-1">
-          <Link href={`/`} className="btn btn-ghost text-xl px-0">
+          <Link
+            href={`/`}
+            className="btn btn-ghost text-xl px-0 duration-150 transition-linear hover:bg-transparent hover:scale-105">
             <Image src="/logo.svg" alt="logo" width={36} height={36} />
           </Link>
         </div>
-        <div className="flex gap-1">
+        <div className="flex  items-center gap-1">
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <div
@@ -54,7 +58,7 @@ function Header() {
                 role="button"
                 className="btn btn-ghost btn-circle">
                 <div className="indicator">
-                  <MdOutlineNotifications className="text-2xl" />
+                  <MdOutlineNotifications className="text-xl" />
                   {notifcations && (
                     <span className="badge badge-sm indicator-item">
                       {notifcations.length}
@@ -69,22 +73,11 @@ function Header() {
               </div>
             </div>
           ) : null}
-
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar">
-                <div className="w-8 rounded-full">
-                  <Image
-                    alt="Tailwind CSS Navbar component"
-                    src="/avatar.jpg"
-                    width={36}
-                    height={36}
-                  />
-                </div>
-              </div>
+              <button className="btn btn-sm btn-ghost text-xs font-semibold">
+                {loggedInUser.email}
+              </button>
               <ul
                 tabIndex={0}
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
@@ -103,9 +96,11 @@ function Header() {
               </ul>
             </div>
           ) : (
-            <button className="btn btn-primary text-white font-bold py-1 px-8">
+            <Link
+              href="/login"
+              className="btn btn-primary text-white font-bold py-1 px-8">
               Login
-            </button>
+            </Link>
           )}
         </div>
       </div>

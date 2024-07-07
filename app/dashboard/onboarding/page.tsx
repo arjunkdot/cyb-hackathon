@@ -81,6 +81,7 @@ function Onboarding() {
 
   return (
     <div className="min-h-[calc(100vh-72px)] bg-gray-50">
+      <title>Complete your profile - PixaJobs</title>
       <div className="container py-8">
         <div className="max-w-[400px] mx-auto bg-white border border-gray-300 p-4">
           <h1 className="text-xl font-bold text-center mt-4">

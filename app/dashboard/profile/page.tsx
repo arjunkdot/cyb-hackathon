@@ -86,6 +86,7 @@ function Dashboard() {
 
   return (
     <div>
+      <title>Profile - PixaJobs</title>
       <div className="bg-background py-2">
         <div className="container">
           <div className="breadcrumbs text-sm mb-0">

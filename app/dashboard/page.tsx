@@ -21,6 +21,8 @@ export default function Dashboard() {
 
   return (
     <div>
+      <title>Dashboard - PixaJobs</title>
+
       <div className="bg-background py-2">
         <div className="container">
           <div className="breadcrumbs text-sm mb-0">
