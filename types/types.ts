@@ -7,7 +7,7 @@ export type TalentCardType = {
     id: string;
     name: string;
     position: string;
-    exp: number;
+    experience: number;
     description: string;
     rating?: number;
     tags?: string[];

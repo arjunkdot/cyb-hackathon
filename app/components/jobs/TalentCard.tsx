@@ -8,7 +8,7 @@ const TalentCard = ({
   name,
   position,
   description,
-  exp,
+  experience,
   tags,
   rating,
 }: TalentCardType) => {
@@ -30,7 +30,7 @@ const TalentCard = ({
               <BsDot />
             </p>
             <p className="text-slate-500 text-sm">
-              {exp} {exp > 1 ? "years" : "year"}
+              {experience} {experience > 1 ? "years" : "year"}
             </p>
           </div>
         </div>
@@ -50,9 +50,12 @@ const TalentCard = ({
       </p>
       <div className="flex gap-1 font-bold mt-5">
         {tags
-          ? tags.map((tag) => (
-              <div key={tag} className="badge badge-info text-xs badge-outline">
-                {tag}
+          ? tags.split(",").map((tag) => (
+              <div
+                key={tag.trim()}
+                className="badge badge-info text-xs badge-outline"
+              >
+                {tag.trim()}
               </div>
             ))
           : null}
