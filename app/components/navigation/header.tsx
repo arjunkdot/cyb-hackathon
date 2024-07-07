@@ -9,16 +9,17 @@ function Header() {
     <div className="navbar bg-base-100 p-0 border border-b border-slate-200">
       <div className="container">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl px-0">
+          <Link href={`/`} className="btn btn-ghost text-xl px-0">
             <Image src="/logo.svg" alt="logo" width={36} height={36} />
-          </a>
+          </Link>
         </div>
         <div className="flex gap-1">
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle">
+              className="btn btn-ghost btn-circle"
+            >
               <div className="indicator">
                 <MdOutlineNotifications className="text-2xl" />
                 <span className="badge badge-sm indicator-item">2</span>
@@ -26,7 +27,8 @@ function Header() {
             </div>
             <div
               tabIndex={0}
-              className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
+              className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow"
+            >
               <Notification />
             </div>
           </div>
@@ -34,7 +36,8 @@ function Header() {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar">
+              className="btn btn-ghost btn-circle avatar"
+            >
               <div className="w-8 rounded-full">
                 <Image
                   alt="Tailwind CSS Navbar component"
@@ -46,12 +49,13 @@ function Header() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
               <li>
-                <a className="justify-between">
+                <Link href={`/talent/user`} className="justify-between">
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a>Settings</a>

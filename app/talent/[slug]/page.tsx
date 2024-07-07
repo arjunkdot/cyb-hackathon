@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   MdOutlineBookmarkBorder,
   MdOutlineStar,
@@ -8,15 +9,71 @@ import { BiDollarCircle } from "react-icons/bi";
 import Rating from "@/app/components/general/Rating";
 import RatingBars from "@/app/components/general/RatingBars";
 import Comment from "@/app/components/general/Comment";
+import { supabase } from "@/lib/supabaseClient";
 
 function TalentProfile() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    experience: 0,
+    payRange: 0,
+    hours: 0,
+  });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        setIsLoading(true);
+        const user = supabase.auth.getUser();
+        if (user) {
+          // Fetch user profile data from Supabase
+          const { data, error } = await supabase
+            .from("talents")
+            .select("*")
+            .eq("user_id", (await user).data.user?.id)
+            .single();
+
+          if (error) {
+            throw error;
+          }
+
+          if (data) {
+            setUserData({
+              name: data.name || "",
+              email: (await supabase.auth.getUser()).data.user?.email || "",
+              experience: data.experience || 0,
+              payRange: data.pay || 0,
+              hours: data.hours_per_week || 0,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="min-h-[calc(100vh-72px)] bg-gray-100 py-10">
       <div className="container bg-white border border-gray-300">
         <div className="border-b border-gray-300 p-8 flex items-start justify-between">
           <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-2xl font-bold mb-1">Talent Name</h1>
+              {isLoading ? (
+                <div className="skeleton h-4 w-28"></div>
+              ) : (
+                <h1 className="text-2xl font-bold mb-1">{userData.name}</h1>
+              )}
+
               <div className="badge badge-success badge-lg text-xs font-bold text-white px-1">
                 4.5 <MdOutlineStar className="ml-1" />
               </div>
@@ -44,17 +101,21 @@ function TalentProfile() {
             <div className="stats border border-gray-300 w-100">
               <div className="stat">
                 <div className="stat-title text-xs font-bold">Experience</div>
-                <div className="stat-value text-xl mt-1">15 Years</div>
+                <div className="stat-value text-xl mt-1">
+                  {userData.experience} Years
+                </div>
               </div>
               <div className="stat">
                 <div className="stat-title text-xs font-bold">Pay Range</div>
-                <div className="stat-value text-xl mt-1">$1000 - $2000</div>
+                <div className="stat-value text-xl mt-1">
+                  {userData.payRange}
+                </div>
               </div>
             </div>
             {/* End of Stats */}
             <div className="mt-8">
               <h3 className="text-base font-bold">Hours per week</h3>
-              <p className="text-sm text-gray-500">40 hours a week</p>
+              <p className="text-sm text-gray-500">{userData.hours}</p>
             </div>
             <div className="mt-4">
               <h3 className="text-base font-bold">Tags</h3>
@@ -113,7 +174,8 @@ function TalentProfile() {
                   <Rating />
                   <textarea
                     className="textarea textarea-bordered w-full mt-3"
-                    placeholder="Write a review"></textarea>
+                    placeholder="Write a review"
+                  ></textarea>
                   <button className="btn btn-primary text-white w-full mt-3">
                     Add Review
                   </button>
