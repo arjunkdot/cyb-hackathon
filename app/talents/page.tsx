@@ -36,7 +36,10 @@ function JobsPage() {
       <div className="container my-8">
         <div className="grid grid-cols-[350px_1fr] gap-4">
           <div>
-            <TalentFilter />
+            {/* <TalentFilter
+              selectedFilters={undefined}
+              setSelectedFilters={undefined}
+            /> */}
           </div>
           <div>
             <div className="mb-4">
