@@ -10,6 +10,7 @@ import {
 } from "react-icons/md";
 
 import Loading from "../components/general/Loading";
+import Link from "next/link";
 
 export default function Dashboard() {
   const [jobApplications, setJobApplications] = useState<any[]>([]);
@@ -115,7 +116,6 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-
               {jobApplications.length > 0 ? (
                 jobApplications.map((application) => (
                   <tr key={application.id}>
@@ -131,7 +131,8 @@ export default function Dashboard() {
                       <div
                         className={`badge badge-${getStatusBadgeColor(
                           application.status
-                        )} text-xs font-bold text-black`}>
+                        )} text-xs font-bold text-black`}
+                      >
                         {application.status}
                       </div>
                     </td>
