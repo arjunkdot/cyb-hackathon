@@ -1,8 +1,8 @@
 import React from "react";
-import Banner from "../components/general/Banner";
 import TalentCard from "../components/jobs/TalentCard";
 import { MdOutlineSearch } from "react-icons/md";
 import TalentFilter from "../components/jobs/TalentFilter";
+import Banner from "../components/general/banner";
 
 const TALENTS = [
   {

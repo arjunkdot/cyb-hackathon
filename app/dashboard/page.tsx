@@ -1,11 +1,47 @@
-import React from "react";
+"use client";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import {
   MdAddCircleOutline,
   MdArrowDropDown,
   MdOutlineSearch,
 } from "react-icons/md";
 
-function Dashboard() {
+export default function Dashboard() {
+  const router = useRouter();
+  const [userData, setUserData] = useState<any>(null); // Initialize user state as null
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        console.log("Checking session...");
+        const { data: session, error } = await supabase.auth.getSession();
+
+        if (error) {
+          console.error("Error fetching session:", error);
+          throw error;
+        }
+
+        if (!session) {
+          console.log("No session found, redirecting to login...");
+          router.push("/login");
+        } else {
+          setUserData(session.session?.user); // Set userData to session.user
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+        router.push("/login");
+      }
+    };
+
+    checkSession();
+  }, [router]);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <div className="bg-background py-2">
@@ -22,6 +58,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      <h1>Welcome, {userData.email}</h1>
 
       <div className="container mt-8">
         <div className="flex items-center justify-between">
@@ -141,5 +178,3 @@ function Dashboard() {
     </div>
   );
 }
-
-export default Dashboard;
