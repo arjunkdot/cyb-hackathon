@@ -1,6 +1,8 @@
 "use client";
 import { supabase } from "@/lib/supabaseClient";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Forbidden from "../components/general/Forbidden";
 import React, { useEffect, useState } from "react";
 import {
   MdAddCircleOutline,
@@ -15,7 +17,6 @@ export default function Dashboard() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        console.log("Checking session...");
         const { data: session, error } = await supabase.auth.getSession();
 
         if (error) {
@@ -39,7 +40,7 @@ export default function Dashboard() {
   }, [router]);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <Forbidden />;
   }
 
   return (

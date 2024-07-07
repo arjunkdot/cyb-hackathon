@@ -36,22 +36,25 @@ function Header() {
           </a>
         </div>
         <div className="flex gap-1">
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle">
-              <div className="indicator">
-                <MdOutlineNotifications className="text-2xl" />
-                <span className="badge badge-sm indicator-item">2</span>
+          {loggedInUser ? (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle">
+                <div className="indicator">
+                  <MdOutlineNotifications className="text-2xl" />
+                  <span className="badge badge-sm indicator-item">2</span>
+                </div>
+              </div>
+              <div
+                tabIndex={0}
+                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
+                <Notification />
               </div>
             </div>
-            <div
-              tabIndex={0}
-              className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
-              <Notification />
-            </div>
-          </div>
+          ) : null}
+
           {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <div
@@ -84,7 +87,11 @@ function Header() {
                 </li>
               </ul>
             </div>
-          ) : null}
+          ) : (
+            <button className="btn btn-primary text-white font-bold py-1 px-8">
+              Login
+            </button>
+          )}
         </div>
       </div>
     </div>
