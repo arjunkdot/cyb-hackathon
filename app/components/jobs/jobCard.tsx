@@ -41,10 +41,10 @@ const JobCard = ({ job }) => {
             <CgProfile className="text-lg" />
             View Job
           </Link>
-          <a href="#" className="btn btn-light">
+          {/* <a href="#" className="btn btn-light">
             <MdOutlineBookmarkBorder className="text-lg" />
             Bookmark
-          </a>
+          </a> */}
         </div>
       </div>
       <p className="text-sm text-gray-700 leading-6 tracking-wide">
@@ -55,8 +55,7 @@ const JobCard = ({ job }) => {
           ? tags.split(",").map((tag) => (
               <div
                 key={tag.trim()}
-                className="badge badge-info text-xs badge-outline"
-              >
+                className="badge badge-info text-xs badge-outline">
                 {tag.trim()}
               </div>
             ))

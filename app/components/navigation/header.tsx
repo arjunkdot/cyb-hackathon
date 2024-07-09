@@ -7,7 +7,8 @@ import { supabase } from "@/lib/supabaseClient";
 import useNotifactions from "./../../hooks/useNotifications";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { NotificatonType } from "@/types/types";
 import { User } from "@supabase/supabase-js";
 
@@ -46,12 +47,11 @@ function Header() {
     <div className="navbar bg-base-100 p-0 border border-b border-slate-200">
       <div className="container flex items-center justify-between">
         <div className="flex items-center space-x-7">
-          <Link
+          <a
             href={`/`}
-            className="btn btn-ghost text-xl px-0 duration-150 transition-linear hover:bg-transparent hover:scale-105"
-          >
+            className="btn btn-ghost text-xl px-0 duration-150 transition-linear hover:bg-transparent hover:scale-105">
             <Image src="/logo.svg" alt="logo" width={36} height={36} />
-          </Link>
+          </a>
           <ul className="flex items-center space-x-5">
             <li className="text-sm font-semibold duration-150 linear hover:text-gray-600">
               <Link href="/jobs">Jobs</Link>
@@ -68,8 +68,7 @@ function Header() {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle"
-              >
+                className="btn btn-ghost btn-circle">
                 <div className="indicator">
                   <MdOutlineNotifications className="text-xl" />
                   {notifcations && (
@@ -81,8 +80,7 @@ function Header() {
               </div>
               <div
                 tabIndex={0}
-                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow"
-              >
+                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-[200px] shadow">
                 {notifcations && <Notification notifications={notifcations} />}
               </div>
             </div>
@@ -95,8 +93,7 @@ function Header() {
 
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                 {/* <li>
                   <Link href="/talent/user" className="justify-between">
                     Profile
@@ -117,13 +114,13 @@ function Header() {
           ) : (
             <Link
               href="/login"
-              className="btn btn-primary btn-sm text-white font-bold py-2 px-8"
-            >
+              className="btn btn-primary btn-sm text-white font-bold py-2 px-8">
               Login
             </Link>
           )}
         </div>
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 }

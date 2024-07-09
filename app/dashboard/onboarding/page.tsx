@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "./../../../lib/supabaseClient";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useCheckProfileExists } from "../../hooks/useCheckProfileExists";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   position: z.string().min(1, "Job position is required"),
@@ -66,7 +68,6 @@ function Onboarding() {
       if (error) {
         console.error("Error inserting data: ", error.message);
       } else {
-        console.log("Data inserted successfully: ", data);
         // Reset form data
         setFormData({
           name: "",
@@ -77,6 +78,7 @@ function Onboarding() {
           bio: "",
           paypal: "",
         });
+        toast.success("Profile added");
 
         router.push("/dashboard/");
       }
@@ -205,7 +207,7 @@ function Onboarding() {
                 </span>
               </div>
               <input
-                type="number"
+                type="text"
                 name="paypal"
                 value={formData.paypal}
                 onChange={handleChange}

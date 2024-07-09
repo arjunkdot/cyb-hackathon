@@ -3,19 +3,18 @@
 import { supabase } from "@/lib/supabaseClient";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { MdOutlineBookmarkBorder, MdOutlineArrowOutward } from "react-icons/md";
-
-import { toast, ToastContainer } from "react-toastify";
+import { MdOutlineArrowOutward } from "react-icons/md";
+import useNotificatons from "../../hooks/useNotifications";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { applyForJob } from "@/lib/jobApplicationService"; // Example service function to handle application submission
 import Loading from "@/app/components/general/Loading";
 
 function TalentProfile({ jobId }) {
   const router = useRouter();
   const { slug } = useParams(); // Get the slug from the URL
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const { addNotification } = useNotificatons();
   const [job, setJob] = useState({
     title: "",
     description: "",
@@ -93,8 +92,12 @@ function TalentProfile({ jobId }) {
       if (error) {
         throw error;
       }
-      console.log("Application submitted successfully!");
-      toast.success("Application submitted successfully!"); // Show success toast
+      addNotification(
+        (await supabase.auth.getUser()).data.user?.id,
+        `Application for ${job.title} has been submitted!`
+      );
+      toast.success("Applied successfully!"); // Show success toast
+      router.push("/dashboard");
     } catch (error) {
       console.error("Error submitting application:", error);
       toast.error("Failed to submit application. Please try again later."); // Show error toast
@@ -108,7 +111,6 @@ function TalentProfile({ jobId }) {
 
   return (
     <div className="min-h-[calc(100vh-72px)] bg-gray-100 py-10">
-      <ToastContainer />
       <div className="container bg-white border border-gray-300">
         <div className="border-b border-gray-300 p-8 flex items-start justify-between">
           <div>
@@ -120,15 +122,14 @@ function TalentProfile({ jobId }) {
           <div className="flex flex-wrap space-x-1">
             <button
               className="btn btn-primary text-white"
-              onClick={insertApplication}
-            >
+              onClick={insertApplication}>
               <MdOutlineArrowOutward className="text-lg" />
               Apply
             </button>
 
-            <a href="#" className="btn btn-light">
+            {/* <a href="#" className="btn btn-light">
               <MdOutlineBookmarkBorder className="text-lg" />
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-[450px_1fr] ">

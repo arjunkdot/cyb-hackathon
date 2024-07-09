@@ -98,14 +98,13 @@ function TalentProfile() {
             <a
               href={`https://paypal.me/${userData.paypal}`}
               target="_blank"
-              className="btn btn-secondary text-white"
-            >
+              className="btn btn-secondary text-white">
               <BiDollarCircle className="text-lg" />
               Donate
             </a>
-            <a href="#" className="btn btn-light">
+            {/* <a href="#" className="btn btn-light">
               <MdOutlineBookmarkBorder className="text-lg" />
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-[450px_1fr] ">
@@ -182,8 +181,7 @@ function TalentProfile() {
                   <Rating />
                   <textarea
                     className="textarea textarea-bordered w-full mt-3"
-                    placeholder="Write a review"
-                  ></textarea>
+                    placeholder="Write a review"></textarea>
                   <button className="btn btn-primary text-white w-full mt-3">
                     Add Review
                   </button>

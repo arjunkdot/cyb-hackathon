@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useNotificatons from "../../hooks/useNotifications";
 import { NotificatonType } from "@/types/types";
 import { formatRelative } from "date-fns";
 import useCurrentUser from "./../../hooks/useUserInfo";
