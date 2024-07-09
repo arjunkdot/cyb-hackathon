@@ -9,7 +9,7 @@ const TalentCard = ({
   id,
   name,
   position,
-  description,
+  bio,
   experience,
   user_id,
   tags,
@@ -40,7 +40,8 @@ const TalentCard = ({
         <div className="flex items-center gap-1">
           <Link
             href={`/talent/${user_id}`}
-            className="btn btn-primary text-white">
+            className="btn btn-primary text-white"
+          >
             <CgProfile className="text-lg" />
             View Profile
           </Link>
@@ -50,15 +51,14 @@ const TalentCard = ({
           </a> */}
         </div>
       </div>
-      <p className="text-sm text-gray-700 leading-6 tracking-wide">
-        {description}
-      </p>
+      <p className="text-sm text-gray-700 leading-6 tracking-wide">{bio}</p>
       <div className="flex gap-1 font-bold mt-5">
         {tags
           ? tags.split(",").map((tag) => (
               <div
                 key={tag.trim()}
-                className="badge badge-info text-xs badge-outline">
+                className="badge badge-info text-xs badge-outline"
+              >
                 {tag.trim()}
               </div>
             ))

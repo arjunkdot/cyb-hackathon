@@ -21,6 +21,8 @@ function TalentProfile() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
+    bio: "",
+    position: "",
     description: "",
     experience: "",
     payRange: "",
@@ -49,6 +51,8 @@ function TalentProfile() {
             setUserData({
               name: data[0].name,
               email: data[0].email || "",
+              position: data[0].position || "",
+              bio: data[0].bio || "",
               description: data[0].description || "",
               experience: data[0].experience || 0,
               payRange: data[0].pay || 0,
@@ -88,7 +92,7 @@ function TalentProfile() {
                 4.5 <MdOutlineStar className="ml-1" />
               </div>
             </div>
-            <p className="text-gray-500">Position Name</p>
+            <p className="text-gray-500">{userData.position}</p>
           </div>
           <div className="flex flex-wrap space-x-1">
             <a href="#" className="btn btn-primary text-white">
@@ -98,7 +102,8 @@ function TalentProfile() {
             <a
               href={`https://paypal.me/${userData.paypal}`}
               target="_blank"
-              className="btn btn-secondary text-white">
+              className="btn btn-secondary text-white"
+            >
               <BiDollarCircle className="text-lg" />
               Donate
             </a>
@@ -155,7 +160,7 @@ function TalentProfile() {
           <div>
             <div className="border-b border-gray-300 p-8">
               <h2 className="font-bold text-xl mb-4">Profile</h2>
-              <p>{userData.description}</p>
+              <p>{userData.bio}</p>
             </div>
             {/* Work History */}
             <div className="p-8">
@@ -181,7 +186,8 @@ function TalentProfile() {
                   <Rating />
                   <textarea
                     className="textarea textarea-bordered w-full mt-3"
-                    placeholder="Write a review"></textarea>
+                    placeholder="Write a review"
+                  ></textarea>
                   <button className="btn btn-primary text-white w-full mt-3">
                     Add Review
                   </button>
